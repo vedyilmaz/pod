@@ -14,6 +14,7 @@ services:
       - traefik_pod_network
     labels:
       - "traefik.enable=true"
+      - "--providers.docker.exposedbydefault=false"
       - "traefik.http.routers.traefik.rule=Host(`traefik.${WORDPRESS_DOMAIN_POD}`)"
       - "traefik.http.routers.traefik.service=api@internal"
       - "traefik.http.routers.traefik.entrypoints=websecure"
