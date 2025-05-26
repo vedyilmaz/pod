@@ -3,25 +3,23 @@ services:
     image: traefik:v2.11.1
     container_name: traefik_pod
     restart: always
-    ports:
-      - "51.75.162.177:80:80"
-      - "51.75.162.177:443:443"
+    
+    # No host ports -> avoids the bind-conflict
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./traefik.yml:/etc/traefik/traefik.yml
       - ./volumes/letsencrypt:/letsencrypt
     networks:
       - traefik_pod_network
+    command:
+      - --entrypoints.web.address=:8000
+      - --entrypoints.websecure.address=:8444      # just for local https if you need it
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --providers.docker.constraints=Label(`stack`)==b
     labels:
-      - "traefik.enable=true"
-      - "--providers.docker.exposedbydefault=false"
-      - "traefik.http.routers.traefik.rule=Host(`traefik.${WORDPRESS_DOMAIN_POD}`)"
-      - "traefik.http.routers.traefik.service=api@internal"
-      - "traefik.http.routers.traefik.entrypoints=websecure"
-      - "traefik.http.routers.traefik.tls.certresolver=letsencrypt"
-      - "traefik.http.routers.traefik.middlewares=traefik-auth"
-      # Basic Authentication for Dashboard
-      - "traefik.http.middlewares.traefik-auth.basicauth.users=${TRAEFIK_BASIC_AUTH}"
+      - stack=b                                    # lets Traefik-B see itself
+      - traefik.enable=false  
 
    # Wordpress for woocommerce print on demand 
   wordpress_pod:
