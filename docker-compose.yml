@@ -71,7 +71,7 @@ services:
       retries: 10
 
 networks:
-  traefik_network:
+  traefik_pod_network:
     name: traefik_pod_network
     driver: bridge
     attachable: true
@@ -79,7 +79,7 @@ networks:
       com.docker.network.enable_ipv6: "false"
       com.docker.network.bridge.enable_icc: "true"
       
-  backend_network:
+  backend_pod_network:
     name: backend_pod_network
     driver: bridge
     internal: true
