@@ -4,8 +4,8 @@ services:
     container_name: traefik_pod
     restart: always
     ports:
-      - "80:80"
-      - "443:443"
+      - "51.75.162.177:80:80"
+      - "51.75.162.177:443:443"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./traefik.yml:/etc/traefik/traefik.yml
