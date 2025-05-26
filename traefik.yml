@@ -1,0 +1,28 @@
+api:
+  dashboard: true
+  insecure: false  # Disable HTTP dashboard access
+
+entryPoints:
+  web:
+    address: ":80"
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+
+  websecure:
+    address: ":443"  # TLS is implicit here
+
+certificatesResolvers:
+  letsencrypt:
+    acme:
+      email: vedat@thingsmart.co
+      storage: /letsencrypt/acme.json
+      httpChallenge:
+        entryPoint: web
+
+providers:
+  docker:
+    exposedByDefault: false
+    network: traefik_networks
