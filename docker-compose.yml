@@ -68,7 +68,7 @@ services:
       retries: 10
 
 networks:
-  traefik_pod_network:
+  traefik_network:
     name: traefik_network
     driver: bridge
     attachable: true
