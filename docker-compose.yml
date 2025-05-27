@@ -70,11 +70,7 @@ services:
 networks:
   traefik_network:
     name: traefik_network
-    driver: bridge
-    attachable: true
-    driver_opts:
-      com.docker.network.enable_ipv6: "false"
-      com.docker.network.bridge.enable_icc: "true"
+    external: true
       
   backend_pod_network:
     name: backend_pod_network
