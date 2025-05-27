@@ -14,7 +14,7 @@ services:
       - --entrypoints.websecure.address=:8444      # just for local https if you need it
       - --providers.docker=true
       - --providers.docker.exposedbydefault=false
-      - --providers.docker.constraints=Label(`stack`)==b
+      - --providers.docker.constraints=Label("traefik.stack", "secondary")
     labels:
       - stack=b                                    # lets Traefik-B see itself
       - traefik.enable=false  
