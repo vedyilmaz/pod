@@ -8,7 +8,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
-      - traefik_pod_network
+      - traefik_network
     command:
       - --entrypoints.web.address=:8000
       - --entrypoints.websecure.address=:8444      # just for local https if you need it
@@ -29,7 +29,7 @@ services:
       db_pod:
         condition: service_healthy
     networks:
-      - traefik_pod_network
+      - traefik_network
       - backend_pod_network
     environment:
       WORDPRESS_DB_HOST: db_pod:3306
@@ -69,7 +69,7 @@ services:
 
 networks:
   traefik_pod_network:
-    name: traefik_pod_network
+    name: traefik_network
     driver: bridge
     attachable: true
     driver_opts:
